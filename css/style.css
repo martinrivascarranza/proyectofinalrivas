@@ -1,0 +1,53 @@
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background: url('/assets/imagenes/background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background: rgba(72, 93, 114, 0.3); 
+  backdrop-filter: blur(15px); 
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 20px;
+  width: 50%;
+
+}
+
+.information {
+  text-align: center;
+}
+
+.referencias{
+  display: flex;
+  justify-content: space-around;
+}
+
+.solimagen {
+  width: 150px;
+}
+
+.humedadimagen {
+  width: 50px;object-fit: cover;
+  height: 40px;
+}
+
+.vientoimagen {
+  width: 55px;
+  object-fit: cover;
+  height: 40px;
+}
+
+.w-cont{
+  display: flex;
+}
