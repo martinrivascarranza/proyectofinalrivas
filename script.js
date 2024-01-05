@@ -1,55 +1,59 @@
 
-const container = document.querySelector('.container');
-const search = document.querySelector('.search-box button');
-const weatherbox = document.querySelector('.weather-box');
-const weatherDetails = document.querySelector('.weather-details');
+$(document).ready(function () {
+  const container = $('.container');
+  const search = $('.search-box button');
+  const weatherbox = $('.weather-box');
+  const weatherDetails = $('.weather-details');
 
-search.addEventListener('click', () => {
-  const APIKey = '9dca27514c83b4591bd2500414124555';
-  const city = document.querySelector('.search-box input').value;
+  search.on('click', () => {
+    const APIKey = '9dca27514c83b4591bd2500414124555';
+    const city = $('.search-box input').val();
 
-  if (city === '') return;
+    if (city === '') return;
 
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=es&appid=${APIKey}`)
-    .then(response => response.json())
-    .then(json => {
-      const image = document.querySelector('.weather-box img');
-      const temperature = document.querySelector('.weather-box .temperature');
-      const description = document.querySelector('.weather-box .description');
-      const humidity = document.querySelector('.weather-details .humidity span');
-      const wind = document.querySelector('.weather-details .wind span');
+    $.ajax({
+      url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=es&appid=${APIKey}`,
+      method: 'GET',
+      success: function (json) {
+        const image = weatherbox.find('img');
 
-      switch (json.weather[0].main) {
-        case 'Clear':
-          image.src = 'assets/imagenes/clear.png';
-          break;
+        const temperature = weatherbox.find('.temperature');
 
-        case 'Rain':
-          image.src = 'assets/imagenes/rain.png';
-          break;
+        const description = weatherbox.find('.description');
 
-        case 'Snow':
-          image.src = 'assets/imagenes/snow.png';
-          break;
+        const humidity = weatherDetails.find('.humidity span');
+        
+        const wind = weatherDetails.find('.wind span');
 
-        case 'Clouds':
-          image.src = 'assets/imagenes/clouds.png';
-          break;
+        switch (json.weather[0].main) {
+          case 'Clear':
+            image.attr('src', 'assets/imagenes/clear.png');
+            break;
+          case 'Rain':
+            image.attr('src', 'assets/imagenes/rain.png');
+            break;
+          case 'Snow':
+            image.attr('src', 'assets/imagenes/snow.png');
+            break;
+          case 'Clouds':
+            image.attr('src', 'assets/imagenes/clouds.png');
+            break;
+          case 'Mist':
+            image.attr('src', 'assets/imagenes/mist.png');
+            break;
+          case 'Drizzle':
+            image.attr('src', 'assets/imagenes/drizzle.png');
+            break;
+          default:
+            image.attr('src', 'assets/imagenes/clouds.png');
+        }
 
-        case 'Mist':
-          image.src = 'assets/imagenes/mist.png';
-          break;
-
-        case 'Drizzle':
-            image.src = 'assets/imagenes/drizzle.png';
-
-        default:
-          image.src = 'assets/imagenes/clouds.png';
+        temperature.text(json.main.temp + '°C');
+        description.text(json.weather[0].description);
+        humidity.text(json.main.humidity + '%');
+        wind.text(json.wind.speed + ' m/s');
       }
-
-      temperature.textContent = json.main.temp + '°C';
-      description.textContent = json.weather[0].description;
-      humidity.textContent = json.main.humidity + '%';
-      wind.textContent = json.wind.speed + ' m/s';
     });
+  });
 });
+
